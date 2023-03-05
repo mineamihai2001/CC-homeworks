@@ -36,7 +36,7 @@ func main() {
 	server.Get("/facts/:category", func(req *Request, res *Response) {
 		args := req.Params()
 
-		category := db.Category(args[0])
+		category := db.Category(args[1])
 		filter := bson.D{{"category", category}}
 		results := db.Find[db.Fact](client, "facts", filter)
 
@@ -54,7 +54,9 @@ func main() {
 		}
 
 		id := db.Insert(client, "facts", dto)
-		res.Raw(id).Status(http.StatusCreated)
+		res.Json(db.CreateFactResponseDto{
+			CreatedId: id,
+		}).Status(http.StatusCreated)
 	})
 
 	// Update
@@ -73,14 +75,35 @@ func main() {
 			},
 		}
 		result := db.Update(client, "facts", dto.Id, update)
-		res.Json(result)
+		res.Json(db.UpdateFactResponseDto{
+			UpdatedCount: result,
+		}).Status(http.StatusOK)
+	})
+
+	// Update (raw response)
+	server.Put("/facts/raw", func(req *Request, res *Response) {
+		var dto db.UpdateFactDto
+		Body(req, &dto)
+
+		if dto.Category == "" {
+			dto.Category = db.GENERAL
+		}
+		update := bson.M{
+			"$set": bson.M{
+				"category": dto.Category,
+				"question": dto.Question,
+				"answer":   dto.Answer,
+			},
+		}
+		result := db.Update(client, "facts", dto.Id, update)
+		res.Raw(fmt.Sprint(result)).Status(http.StatusOK)
 	})
 
 	// Delete
 	server.Delete("/facts/:id", func(req *Request, res *Response) {
 		args := req.Params()
 
-		id := args[0]
+		id := args[1]
 		result := db.DeleteOne(client, "facts", id)
 
 		status := http.StatusOK

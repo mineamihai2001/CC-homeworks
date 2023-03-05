@@ -11,6 +11,7 @@ const (
 	HISTORY   Category = "history"
 	GEOGRAPHY Category = "geography"
 	SPORT     Category = "sport"
+	SCIENCE   Category = "science"
 )
 
 type Fact struct {
@@ -37,6 +38,14 @@ type DeleteFactDto struct {
 	Category Category `json:"category"`
 }
 
+type CreateFactResponseDto struct {
+	CreatedId string `json:"createdId"`
+}
+
 type DeleteFactResponseDto struct {
 	DeletedCount int64 `json:"deletedCount"`
+}
+
+type UpdateFactResponseDto struct {
+	UpdatedCount int64 `json:"updatedCount"`
 }

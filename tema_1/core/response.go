@@ -11,7 +11,11 @@ type Response struct {
 func (r *Response) WriteHeaders(w http.ResponseWriter) {
 	for key, value := range r.Headers {
 		w.Header().Set(key, value)
-		w.WriteHeader(r.status)
+		code := r.status
+		if code == 0 {
+			code = http.StatusOK
+		}
+		w.WriteHeader(code)
 	}
 }
 
