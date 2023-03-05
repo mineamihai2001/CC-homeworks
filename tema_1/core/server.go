@@ -45,12 +45,9 @@ func (s *Server) serverHandler(writer http.ResponseWriter, req *http.Request) {
 	}
 	fmt.Printf(">>> %v %v\n", currentRoute.method, currentRoute.path)
 
-	// validate the route
-	callback, err := s.router.get(currentRoute)
-	if err != nil {
-		// throw 404 error
-		HttpCheck(writer, err)
-		return
+	// create the response object
+	res := &Response{
+		Headers: make(map[string]string),
 	}
 
 	// create the request object
@@ -58,11 +55,14 @@ func (s *Server) serverHandler(writer http.ResponseWriter, req *http.Request) {
 		HttpRequest: req,
 	}
 
-	// create the response object
-	res := &Response{
-		headers: make(map[string]string),
+	// validate the route
+	callback, err := s.router.get(currentRoute)
+	if err != nil {
+		// throw 404 error
+		HttpCheck(writer, err)
+		return
 	}
-
+	
 	// execute the registered callback
 	callback(request, res)
 

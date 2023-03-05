@@ -2,21 +2,19 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+	"os"
+	"strconv"
+
 	"github.com/joho/godotenv"
 	. "github.com/mineamihai2001/cc/tema_1/core"
 	"github.com/mineamihai2001/cc/tema_1/database"
 	"go.mongodb.org/mongo-driver/bson"
-	"os"
-	"strconv"
 )
 
 type ApiResponse struct {
 	Status  string `json:"status"`
 	Message string `json:"message"`
-}
-
-type Temp struct {
-	Test string `json:"test"`
 }
 
 func main() {
@@ -30,7 +28,8 @@ func main() {
 	// Read All
 	server.Get("/", func(req *Request, res *Response) {
 		results := db.Find[db.Fact](client, "facts", bson.D{})
-		res.Json(*results)
+
+		res.Json(*results).Status(http.StatusOK)
 	})
 
 	// Read with category
@@ -41,7 +40,7 @@ func main() {
 		filter := bson.D{{"category", category}}
 		results := db.Find[db.Fact](client, "facts", filter)
 
-		res.Json(results)
+		res.Json(results).Status(http.StatusOK)
 	})
 
 	// Create
@@ -55,7 +54,7 @@ func main() {
 		}
 
 		id := db.Insert(client, "facts", dto)
-		res.Raw(id)
+		res.Raw(id).Status(http.StatusCreated)
 	})
 
 	// Update
@@ -84,7 +83,15 @@ func main() {
 		id := args[0]
 		result := db.Delete(client, "facts", id)
 
-		res.Json(result)
+		status := http.StatusOK
+		if result == 0 {
+			status = http.StatusNotFound
+		}
+		dto := db.DeleteFactResponseDto{
+			DeletedCount: result,
+		}
+
+		res.Json(dto).Status(status)
 	})
 
 	server.Run(func() {

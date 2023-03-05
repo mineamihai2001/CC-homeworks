@@ -7,6 +7,15 @@ import (
 	"net/http"
 )
 
+type HttpError struct {
+	StatusCode int
+	Err        error
+}
+
+func (r *HttpError) Error() string {
+	return fmt.Sprintf("status: %v: err: %v", r.StatusCode, r.Err)
+}
+
 func Check(err error, args ...string) {
 	message := ""
 	for _, arg := range args {

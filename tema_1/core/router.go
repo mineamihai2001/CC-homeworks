@@ -49,5 +49,8 @@ func (r *Router) get(route Route) (RouteHandler, error) {
 			return c, nil
 		}
 	}
-	return nil, fmt.Errorf("404 not found: %v", route)
+	return nil, &HttpError{
+		StatusCode: 404,
+		Err:        fmt.Errorf("not found: %v", route),
+	}
 }
