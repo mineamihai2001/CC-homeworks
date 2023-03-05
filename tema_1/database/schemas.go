@@ -33,6 +33,10 @@ type UpdateFactDto struct {
 	Answer   string   `json:"answer"`
 }
 
+type DeleteFactDto struct {
+	Category Category `json:"category"`
+}
+
 type DeleteFactResponseDto struct {
 	DeletedCount int64 `json:"deletedCount"`
 }

@@ -83,11 +83,19 @@ func Update(c *Client, collection string, id string, update interface{}) int64 {
 	return result.ModifiedCount
 }
 
-func Delete(c *Client, collection string, id string) int64 {
+func DeleteOne(c *Client, collection string, id string) int64 {
 	coll := c.Client.Database(c.database).Collection(collection)
 
 	_id, _ := primitive.ObjectIDFromHex(id)
 	result, err := coll.DeleteOne(c.ctx, bson.D{{"_id", _id}})
+	core.Check(err)
+	return result.DeletedCount
+}
+
+func DeleteMany(c *Client, collection string, filter interface{}) int64 {
+	coll := c.Client.Database(c.database).Collection(collection)
+
+	result, err := coll.DeleteMany(c.ctx, filter)
 	core.Check(err)
 	return result.DeletedCount
 }

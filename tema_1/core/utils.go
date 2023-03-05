@@ -32,6 +32,7 @@ func HttpCheck(w http.ResponseWriter, err error, args ...string) {
 		message += arg
 	}
 	if err != nil {
+		w.WriteHeader(404)
 		io.WriteString(w, fmt.Sprintf("%v: %v", message, err))
 	}
 }
@@ -64,12 +65,20 @@ func Clone[T any](list []T) []T {
 	return cpy
 }
 
-func filter[T any](source []T, filter func(x T) bool) []T {
+func Filter[T any](source []T, filter func(x T) bool) []T {
 	var result []T
 	for _, item := range source {
 		if filter(item) {
 			result = append(result, item)
 		}
+	}
+	return result
+}
+
+func Map[T any](source []T, _map func(x T) T) []T {
+	var result []T
+	for _, item := range source {
+		result = append(result, _map(item))
 	}
 	return result
 }

@@ -36,12 +36,12 @@ func (r *Router) register(route Route, callback RouteHandler) {
 
 func (r *Router) get(route Route) (RouteHandler, error) {
 	var re = regexp.MustCompile(`:([^\/]+)`)
-	routeArgs := filter(strings.Split(route.path, "/"), func(item string) bool {
+	routeArgs := Filter(strings.Split(route.path, "/"), func(item string) bool {
 		return item != ""
 	})
 	for r, c := range r.routes {
 		stripped := re.FindAllString(r.path, -1)
-		rArgs := filter(strings.Split(r.path, "/"), func(item string) bool {
+		rArgs := Filter(strings.Split(r.path, "/"), func(item string) bool {
 			return item != ""
 		})
 
