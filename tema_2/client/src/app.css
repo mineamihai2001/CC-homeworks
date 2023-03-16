@@ -1,0 +1,231 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    font-family: "Poppins", sans-serif;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+}
+
+@layer base {
+    /* COLORS FOR ALL ATTRIBUTES */
+    /* .text-primary {
+        @apply text-light-primary dark:text-dark-primary;
+    }
+    .text-secondary {
+        @apply text-light-secondary dark:text-dark-secondary;
+    }
+    .text-tertiary {
+        @apply text-light-tertiary dark:text-dark-tertiary;
+    }
+    .text-error {
+        @apply text-light-error dark:text-dark-error;
+    }
+    .text-background {
+        @apply text-light-background dark:text-dark-background;
+    }
+
+    .text-on-primary {
+        @apply text-light-on-primary dark:text-dark-on-primary;
+    }
+    .text-on-secondary {
+        @apply text-light-on-secondary dark:text-dark-on-secondary;
+    }
+    .text-on-tertiary {
+        @apply text-light-on-tertiary dark:text-dark-on-tertiary;
+    }
+    .text-on-error {
+        @apply text-light-on-error dark:text-dark-on-error;
+    }
+    .text-on-background {
+        @apply text-light-on-background dark:text-dark-on-background;
+    }
+
+    .text-on-container-primary {
+        @apply text-light-on-container-primary dark:text-dark-on-container-primary;
+    }
+    .text-on-container-secondary {
+        @apply text-light-on-container-secondary dark:text-dark-on-container-secondary;
+    }
+    .text-on-container-tertiary {
+        @apply text-light-on-container-tertiary dark:text-dark-on-container-tertiary;
+    }
+    .text-on-container-error {
+        @apply text-light-on-container-error dark:text-dark-on-container-error;
+    }
+    .text-on-container-surface {
+        @apply text-light-on-container-surface dark:text-dark-on-container-surface;
+    }
+
+    .bg-primary {
+        @apply bg-light-primary dark:bg-dark-primary;
+    }
+    .bg-secondary {
+        @apply bg-light-secondary dark:bg-dark-secondary;
+    }
+    .bg-tertiary {
+        @apply bg-light-tertiary dark:bg-dark-tertiary;
+    }
+    .bg-error {
+        @apply bg-light-error dark:bg-dark-error;
+    }
+    .background {
+        @apply bg-light-background dark:bg-dark-background;
+    }
+
+    .bg-on-primary {
+        @apply bg-light-on-primary dark:bg-dark-on-primary;
+    }
+    .bg-on-secondary {
+        @apply bg-light-on-secondary dark:bg-dark-on-secondary;
+    }
+    .bg-on-tertiary {
+        @apply bg-light-on-tertiary dark:bg-dark-on-tertiary;
+    }
+    .bg-on-error {
+        @apply bg-light-on-error dark:bg-dark-on-error;
+    }
+    .bg-on-background {
+        @apply bg-light-on-background dark:bg-dark-on-background;
+    }
+
+    .bg-on-container-primary {
+        @apply bg-light-on-container-primary dark:bg-dark-on-container-primary;
+    }
+    .bg-on-container-secondary {
+        @apply bg-light-on-container-secondary dark:bg-dark-on-container-secondary;
+    }
+    .bg-on-container-tertiary {
+        @apply bg-light-on-container-tertiary dark:bg-dark-on-container-tertiary;
+    }
+    .bg-on-container-error {
+        @apply bg-light-on-container-error dark:bg-dark-on-container-error;
+    }
+    .bg-on-container-surface {
+        @apply bg-light-on-container-surface dark:bg-dark-on-container-surface;
+    }
+
+    .bg-container-primary {
+        @apply bg-light-container-primary dark:bg-dark-on-container-primary;
+    }
+    .bg-container-secondary {
+        @apply bg-light-container-secondary dark:bg-dark-on-container-secondary;
+    }
+    .bg-container-tertiary {
+        @apply bg-light-container-tertiary dark:bg-dark-on-container-tertiary;
+    }
+    .bg-container-error {
+        @apply bg-light-container-error dark:bg-dark-on-container-error;
+    }
+    .bg-container-surface {
+        @apply bg-light-container-surface dark:bg-dark-on-container-surface;
+    }
+
+    .border-primary {
+        @apply border-light-primary dark:border-dark-primary;
+    }
+    .border-secondary {
+        @apply border-light-secondary dark:border-dark-secondary;
+    }
+    .border-tertiary {
+        @apply border-light-tertiary dark:border-dark-tertiary;
+    }
+    .border-error {
+        @apply border-light-error dark:border-dark-error;
+    }
+    .border-background {
+        @apply border-light-background dark:border-dark-background;
+    }
+
+    .border-on-primary {
+        @apply border-light-on-primary dark:border-dark-on-primary;
+    }
+    .border-on-secondary {
+        @apply border-light-on-secondary dark:border-dark-on-secondary;
+    }
+    .border-on-tertiary {
+        @apply border-light-on-tertiary dark:border-dark-on-tertiary;
+    }
+    .border-on-error {
+        @apply border-light-on-error dark:border-dark-on-error;
+    }
+    .border-on-background {
+        @apply border-light-on-background dark:border-dark-on-background;
+    }
+
+    .border-on-container-primary {
+        @apply border-light-on-container-primary dark:border-dark-on-container-primary;
+    }
+    .border-on-container-secondary {
+        @apply border-light-on-container-secondary dark:border-dark-on-container-secondary;
+    }
+    .border-on-container-tertiary {
+        @apply border-light-on-container-tertiary dark:border-dark-on-container-tertiary;
+    }
+    .border-on-container-error {
+        @apply border-light-on-container-error dark:border-dark-on-container-error;
+    }
+    .border-on-container-surface {
+        @apply border-light-on-container-surface dark:border-dark-on-container-surface;
+    }
+
+    .outline-primary {
+        @apply outline-light-primary dark:outline-dark-primary;
+    }
+    .outline-secondary {
+        @apply outline-light-secondary dark:outline-dark-secondary;
+    }
+    .outline-tertiary {
+        @apply outline-light-tertiary dark:outline-dark-tertiary;
+    }
+    .outline-error {
+        @apply outline-light-error dark:outline-dark-error;
+    }
+    .outline-background {
+        @apply outline-light-background dark:outline-dark-background;
+    }
+
+    .outline-on-primary {
+        @apply outline-light-on-primary dark:outline-dark-on-primary;
+    }
+    .outline-on-secondary {
+        @apply outline-light-on-secondary dark:outline-dark-on-secondary;
+    }
+    .outline-on-tertiary {
+        @apply outline-light-on-tertiary dark:outline-dark-on-tertiary;
+    }
+    .outline-on-error {
+        @apply outline-light-on-error dark:outline-dark-on-error;
+    }
+    .outline-on-background {
+        @apply outline-light-on-background dark:outline-dark-on-background;
+    }
+
+    .outline-on-container-primary {
+        @apply outline-light-on-container-primary dark:outline-dark-on-container-primary;
+    }
+    .outline-on-container-secondary {
+        @apply outline-light-on-container-secondary dark:outline-dark-on-container-secondary;
+    }
+    .outline-on-container-tertiary {
+        @apply outline-light-on-container-tertiary dark:outline-dark-on-container-tertiary;
+    }
+    .outline-on-container-error {
+        @apply outline-light-on-container-error dark:outline-dark-on-container-error;
+    }
+    .outline-on-container-surface {
+        @apply outline-light-on-container-surface dark:outline-dark-on-container-surface;
+    } */
+}

@@ -21,7 +21,7 @@ type Client struct {
 
 func NewClient(database string) *Client {
 	uri := os.Getenv("MONGO_URI")
-	ctx, _ := context.WithTimeout(context.Background(), 100*time.Second)
+	ctx, _ := context.WithTimeout(context.Background(), 1000*time.Second)
 
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
 	if err != nil {

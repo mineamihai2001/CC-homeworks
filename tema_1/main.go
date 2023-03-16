@@ -40,6 +40,11 @@ func main() {
 		filter := bson.D{{"category", category}}
 		results := db.Find[db.Fact](client, "facts", filter)
 
+		if len(*results) == 0 {
+			res.Raw("not found").Status(http.StatusNotFound)
+			return
+		}
+
 		res.Json(results).Status(http.StatusOK)
 	})
 
