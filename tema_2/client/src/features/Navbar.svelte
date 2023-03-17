@@ -1,10 +1,25 @@
 <script lang="ts">
     import { SunIcon, MoonIcon } from "svelte-feather-icons";
     import logo from "../assets/svelte.svg";
+    import { Link, useLocation } from "svelte-navigator";
+    const location = useLocation();
+
+    type Route = "/" | "/facts" | "/newsletter";
+    let router: { [key in Route]: boolean } = {
+        "/": true,
+        "/facts": false,
+        "/newsletter": false,
+    };
+
+    function navigateTo(route: Route): void {
+        Object.entries(router).map(([key, value]) => {
+            router[key] = false;
+        });
+        router[route] = true;
+    }
 
     let light: boolean = true;
-
-    function toggleDarkTheme() {
+    function toggleDarkTheme(): void {
         light = !light;
         light
             ? document.documentElement.classList.remove("dark")
@@ -15,12 +30,42 @@
 <nav
     class="w-full bg-on-secondary dark:bg-dark-container-primary flex justify-center items-center px-14"
 >
-    <div class="mr-auto" />
     <div
-        class="flex justify-center items-center gap-4 text-on-background dark:text-dark-on-background text-3xl font-bold py-6"
+        class="mr-auto flex justify-center items-center gap-4 text-on-background dark:text-dark-on-background text-3xl font-bold py-6"
     >
         <img src={logo} alt="logo" class="w-12" />
-        <span>WeatherApp</span>
+        <span>DailyInfo</span>
+    </div>
+    <div
+        class="flex justify-center items-center gap-20 text-2xl text-on-container-secondary dark:text-dark-on-container-primary"
+    >
+        <Link
+            to="/"
+            on:click={() => navigateTo("/")}
+            class={`py-2 ${
+                router["/"]
+                    ? "border-b-2 border-on-container-secondary"
+                    : "border-b-2 border-on-secondary"
+            }`}>Weather</Link
+        >
+        <Link
+            to="/facts"
+            on:click={() => navigateTo("/facts")}
+            class={`py-2 ${
+                router["/facts"]
+                    ? "border-b-2 border-on-container-secondary"
+                    : "border-b-2 border-on-secondary"
+            }`}>Facts</Link
+        >
+        <Link
+            to="/newsletter"
+            on:click={() => navigateTo("/newsletter")}
+            class={`py-2 ${
+                router["/newsletter"]
+                    ? "border-b-2 border-on-container-secondary"
+                    : "border-b-2 border-on-secondary"
+            }`}>Newsletter</Link
+        >
     </div>
     <div
         class="ml-auto flex rounded-full px-2 py-1 gap-2

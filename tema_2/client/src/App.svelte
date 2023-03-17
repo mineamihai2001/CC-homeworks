@@ -1,12 +1,19 @@
 <script lang="ts">
-    import "./app.css";
+    import "./styles/app.css";
     import Navbar from "./features/Navbar.svelte";
     import WeatherLayout from "./features/Weather/Layout.svelte";
+    import { Route, Router, Link } from "svelte-navigator";
 </script>
 
 <main class="w-full h-full bg-background dark:bg-dark-background">
-    <Navbar />
-    <div class="h-full">
-        <WeatherLayout />
-    </div>
+    <Router>
+        <Navbar />
+        <div class="h-full">
+            <Route path="/">
+                <WeatherLayout />
+            </Route>
+            <Route path="/facts">Facts</Route>
+            <Route path="/newsletter">Newsletter</Route>
+        </div>
+    </Router>
 </main>

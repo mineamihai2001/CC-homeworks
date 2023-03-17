@@ -18,7 +18,7 @@ export class WeatherService {
     public async getCurrent(
         latitude: number,
         longitude: number,
-        units: Units = Units.STANDARD
+        units: Units = Units.METRIC
     ): Promise<unknown> {
         const url: string = `${this.endpoint}?lat=${latitude}&lon=${longitude}&units=${units}&appid=${this.apiKey}`;
 
