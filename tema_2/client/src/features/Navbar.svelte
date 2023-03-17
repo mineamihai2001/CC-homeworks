@@ -44,8 +44,8 @@
             on:click={() => navigateTo("/")}
             class={`py-2 ${
                 router["/"]
-                    ? "border-b-2 border-on-container-secondary"
-                    : "border-b-2 border-on-secondary"
+                    ? "border-b-2 border-on-container-secondary dark:border-dark-on-container-primary"
+                    : "border-b-2 border-on-secondary dark:border-dark-container-primary"
             }`}>Weather</Link
         >
         <Link
@@ -53,8 +53,8 @@
             on:click={() => navigateTo("/facts")}
             class={`py-2 ${
                 router["/facts"]
-                    ? "border-b-2 border-on-container-secondary"
-                    : "border-b-2 border-on-secondary"
+                    ? "border-b-2 border-on-container-secondary dark:border-dark-on-container-primary"
+                    : "border-b-2 border-on-secondary dark:border-dark-container-primary"
             }`}>Facts</Link
         >
         <Link
@@ -62,8 +62,8 @@
             on:click={() => navigateTo("/newsletter")}
             class={`py-2 ${
                 router["/newsletter"]
-                    ? "border-b-2 border-on-container-secondary"
-                    : "border-b-2 border-on-secondary"
+                    ? "border-b-2 border-on-container-secondary dark:border-dark-on-container-primary"
+                    : "border-b-2 border-on-secondary dark:border-dark-container-primary"
             }`}>Newsletter</Link
         >
     </div>
