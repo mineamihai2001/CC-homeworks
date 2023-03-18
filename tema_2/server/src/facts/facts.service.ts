@@ -2,7 +2,9 @@ import { HttpService } from "@nestjs/axios";
 import { HttpException, HttpStatus, Injectable, NotImplementedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { AxiosError } from "axios";
-import { catchError, map } from "rxjs";
+import { catchError, firstValueFrom, map } from "rxjs";
+import { IFact } from "./types/IFact";
+import { FactException } from "./types/fact.exception";
 
 @Injectable()
 export class FactsService {
@@ -15,33 +17,59 @@ export class FactsService {
         this.endpoint = this.configService.get<string>("FACTS_ENDPOINT");
     }
 
-    public async getRandomFact(): Promise<unknown> {
-        return this.httpService.get(this.endpoint).pipe(
-            map((response) => response.data),
-            catchError((err: AxiosError) => {
-                throw new HttpException(
-                    {
-                        statusCode: err.response.status,
-                        error: err.response.data,
+    public async getFacts(): Promise<Array<IFact>> {
+        return this.getAllFacts();
+    }
+
+    public async getRandomFact(): Promise<IFact> {
+        const facts = await this.getAllFacts();
+        const index = Math.floor(Math.random() * facts.length);
+        return facts.at(index);
+    }
+
+    public async createFact(fact: IFact): Promise<{ createdId: string }> {
+        return await firstValueFrom(
+            this.httpService
+                .post(this.endpoint, JSON.stringify(fact), {
+                    headers: {
+                        "Content-Type": "application/json",
                     },
-                    HttpStatus.SERVICE_UNAVAILABLE
-                );
-            })
+                })
+                .pipe(
+                    map((response) => response.data),
+                    catchError((err: AxiosError) => {
+                        throw new FactException(err);
+                    })
+                )
         );
     }
 
-    public async createRandomFact(): Promise<unknown> {
-        return this.httpService.post(this.endpoint).pipe(
-            map((response) => response.data),
-            catchError((err: AxiosError) => {
-                throw new HttpException(
-                    {
-                        statusCode: err.response.data,
-                        error: err.response,
+    public async updateFact(fact: IFact): Promise<unknown> {
+        return await firstValueFrom(
+            this.httpService
+                .put(this.endpoint, JSON.stringify(fact), {
+                    headers: {
+                        "Content-Type": "application/json",
                     },
-                    HttpStatus.SERVICE_UNAVAILABLE
-                );
-            })
+                })
+                .pipe(
+                    map((response) => response.data),
+                    catchError((err: AxiosError) => {
+                        throw new FactException(err);
+                    })
+                )
         );
+    }
+
+    private async getAllFacts() {
+        const facts: Array<IFact> = await firstValueFrom(
+            this.httpService.get(this.endpoint).pipe(
+                map((response) => response.data),
+                catchError((err: AxiosError) => {
+                    throw new FactException(err);
+                })
+            )
+        );
+        return facts;
     }
 }

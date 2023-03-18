@@ -12,6 +12,7 @@
     };
 
     function navigateTo(route: Route): void {
+        if (!(route in router)) return;
         Object.entries(router).map(([key, value]) => {
             router[key] = false;
         });
@@ -25,6 +26,8 @@
             ? document.documentElement.classList.remove("dark")
             : document.documentElement.classList.add("dark");
     }
+
+    $: navigateTo($location.pathname as Route);
 </script>
 
 <nav

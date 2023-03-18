@@ -1,17 +1,18 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsNumber, IsOptional } from "class-validator";
+import { IsEnum, IsNotEmpty, IsNumber, IsOptional } from "class-validator";
 import { Units } from "../types/units.enum";
 
 export class CurrentWeatherDto {
     @ApiProperty()
-    @IsNumber()
+    @IsNotEmpty()
     latitude: number;
 
     @ApiProperty()
-    @IsNumber()
+    @IsNotEmpty()
     longitude: number;
 
     @ApiPropertyOptional()
+    @IsOptional()
     @IsEnum(Units)
     units?: Units;
 }

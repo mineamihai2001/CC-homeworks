@@ -35,8 +35,11 @@
     <button
         type="submit"
         class="bg-container-primary text-on-container-primary flex justify-center items-center 
-                    rounded-md px-3 py-1 text-2xl font-semibold
-                    dark:bg-dark-primary"
+                rounded-md px-3 py-1 text-2xl font-semibold
+                dark:bg-dark-primary
+                transition-all duration-100
+                hover:bg-on-container-primary hover:text-container-primary
+                dark:hover:bg-primary hover:dark:text-container-primary"
     >
         <span class="mx-3">GO</span>
         <GlobeIcon class="mx-3" />
