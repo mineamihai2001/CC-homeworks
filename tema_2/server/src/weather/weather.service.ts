@@ -2,8 +2,9 @@ import { HttpService } from "@nestjs/axios";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { AxiosError } from "axios";
-import { catchError, map } from "rxjs";
+import { catchError, firstValueFrom, map } from "rxjs";
 import { Units } from "./types/units.enum";
+import { IWeather } from "./types/IWeather";
 
 @Injectable()
 export class WeatherService {
@@ -19,20 +20,22 @@ export class WeatherService {
         latitude: number,
         longitude: number,
         units: Units = Units.METRIC
-    ): Promise<unknown> {
+    ): Promise<IWeather> {
         const url: string = `${this.endpoint}?lat=${latitude}&lon=${longitude}&units=${units}&appid=${this.apiKey}`;
 
-        return this.httpService.get(url).pipe(
-            map((response) => response.data),
-            catchError((e: AxiosError) => {
-                throw new HttpException(
-                    {
-                        statusCode: e.response.status,
-                        error: e.response.data,
-                    },
-                    HttpStatus.SERVICE_UNAVAILABLE
-                );
-            })
+        return await firstValueFrom(
+            this.httpService.get(url).pipe(
+                map((response) => response.data),
+                catchError((e: AxiosError) => {
+                    throw new HttpException(
+                        {
+                            statusCode: e.response.status,
+                            error: e.response.data,
+                        },
+                        HttpStatus.SERVICE_UNAVAILABLE
+                    );
+                })
+            )
         );
     }
 }

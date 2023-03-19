@@ -6,7 +6,10 @@
 
     const getFacts = (): void => {
         fetch(`${config.__SERVER}/facts`)
-            .then((res) => res.json())
+            .then((res) => {
+                if (res.status === 503) return [];
+                return res.json();
+            })
             .then((res) => (facts = res))
             .catch((err) => console.log("[ERROR] - all facts ", err));
     };
@@ -17,15 +20,19 @@
     });
 </script>
 
-<div class="bg-container-secondary rounded-lg h-96 overflow-auto py-3
-            dark:bg-dark-primary">
+<div
+    class="bg-container-secondary rounded-lg h-96 py-3 flex flex-col
+            dark:bg-dark-primary"
+>
     <header class="grid grid-cols-10 text-on-background text-2xl pt-3 pb-6 border-b">
         <div class="col-span-1 text-center">ID</div>
         <div class="col-span-2 text-start">CATEGORY</div>
         <div class="col-span-5">QUESTION</div>
         <div class="col-span-2 text-center">ANSWER</div>
     </header>
-    {#each facts as fact, i}
-        <Row bind:fact id={i + 1} />
-    {/each}
+    <div class="overflow-auto flex-auto">
+        {#each facts as fact, i}
+            <Row bind:fact id={i + 1} />
+        {/each}
+    </div>
 </div>

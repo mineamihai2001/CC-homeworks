@@ -1,0 +1,71 @@
+<head></head>
+<body>
+    <div>
+        <div>
+            <h1 id="status">Weather Report 🌤️</h1>
+            <div class="weather">
+                <div>
+                    <img src="https://openweathermap.org/img/wn/04d@4x.png" />
+                </div>
+                <div class="weather_status">
+                    <h3>Clouds</h3>
+                    <h4>broken clouds</h4>
+                </div>
+                <div class="weather_details">
+                    <% for(const [key, value] of Object.entries(weather.main)) { %>
+                    <div class="weather_details_row">
+                        <span class="text-xl"
+                            ><%= key .split("_") .map((k) => k.at(0).toUpperCase() + k.slice(1))
+                            .join(" ") %>:</span
+                        >
+                        <span class="text-3xl"><%= value %></span>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h1 id="status">Random Fact 🎲</h1>
+        </div>
+    </div>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+        h1 {
+        }
+        .weather {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+        }
+
+        .weather_status {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 4;
+        }
+        .weather_details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2;
+            margin-left: 3.5rem;
+        }
+        .weather_details_row {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 4;
+        }
+        .text-xl {
+            font-size: 1.25rem;
+        }
+        .text-3xl {
+            font-size: 1.875rem;
+        }
+    </style>
+</body>

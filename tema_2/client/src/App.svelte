@@ -1,9 +1,10 @@
 <script lang="ts">
     import "./styles/app.css";
     import Navbar from "./features/Navbar.svelte";
-    import WeatherLayout from "./features/Weather/Layout.svelte";
-    import FactsLayout from "./features/Facts/Layout.svelte";
-    import { Route, Router, Link } from "svelte-navigator";
+    import { Route, Router } from "svelte-navigator";
+    import Weather from "./pages/Weather.svelte";
+    import Facts from "./pages/Facts.svelte";
+    import Newsletter from "./pages/Newsletter.svelte";
 </script>
 
 <main class="w-full bg-background dark:bg-dark-background">
@@ -11,12 +12,14 @@
         <Navbar />
         <div class="">
             <Route path="/">
-                <WeatherLayout />
+                <Weather />
             </Route>
             <Route path="/facts">
-                <FactsLayout />
+                <Facts />
             </Route>
-            <Route path="/newsletter">Newsletter</Route>
+            <Route path="/newsletter">
+                <Newsletter />
+            </Route>
         </div>
     </Router>
 </main>
