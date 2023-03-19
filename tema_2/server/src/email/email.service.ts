@@ -13,18 +13,32 @@ export class EmailService {
         private readonly weatherService: WeatherService
     ) {}
 
-    public async sendAll(): Promise<boolean> {
+    public async sendAll(email: string): Promise<boolean> {
         const weather = await this.getWeather();
         const fact = await this.getRandomFact();
 
+        return this.sendMail(email, { weather, fact });
+    }
+
+    public async sendWeather(email: string): Promise<boolean> {
+        const weather = await this.getWeather();
+        return this.sendMail(email, { weather });
+    }
+
+    public async sendFact(email: string): Promise<boolean> {
+        const fact = await this.getRandomFact();
+        return this.sendMail(email, { fact });
+    }
+
+    private async sendMail(email: string, context: { weather?: IWeather; fact?: IFact }) {
         return await this.mailerService
             .sendMail({
-                to: "example@mail.com",
+                to: email,
                 from: "noreply@nestjs.com",
                 subject: "Weather Report & Random Fact",
                 text: "",
                 template: "main",
-                context: { weather, fact },
+                context: { ...context },
             })
             .then((_) => true)
             .catch((err) => {
